@@ -2,9 +2,6 @@
 
 set -ev
 
-export BUILD_VERSION="0.0.2-SNAPSHOT"
-export BUILD_DATE=`date +%Y-%m-%dT%T%z`
-
 SCRIPT_DIR=$(dirname "$0")
 
 if [[ -z "$GROUP" ]] ; then
@@ -30,9 +27,5 @@ cp $CODE_DIR/target/*.jar $CODE_DIR/docker/$(basename $CODE_DIR)
 
 for m in ./docker/*/; do
     REPO=${GROUP}/$(basename $m)
-    $DOCKER_CMD build \
-      --build-arg BUILD_VERSION=$BUILD_VERSION \
-      --build-arg BUILD_DATE=$BUILD_DATE \
-      --build-arg COMMIT=$COMMIT \
-      -t ${REPO}:${COMMIT} $CODE_DIR/$m;
+    $DOCKER_CMD build -t ${REPO}:${COMMIT} $CODE_DIR/$m;
 done;
