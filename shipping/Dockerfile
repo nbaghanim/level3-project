@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 30712c4327f686fabf290b3b0cbbeba1661bae1b
 FROM maven:3-jdk-11 as build
 WORKDIR /tmp
 

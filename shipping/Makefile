@@ -3,4 +3,3 @@ build:
 
 run:
 	docker run -it --rm bryandollery/shipping
-
