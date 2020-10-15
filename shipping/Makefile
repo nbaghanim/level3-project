@@ -1,6 +1,5 @@
 build:
-	DOCKER_BUILDKIT=1 docker build --progress=plain --tag nbaghanim/shipping .
+	DOCKER_BUILDKIT=1 docker build --progress=plain --tag shipping .
 
 run:
-	docker run -it --rm nbaghanim/shipping
-
+	docker run -it --rm bryandollery/shipping
