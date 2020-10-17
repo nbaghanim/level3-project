@@ -54,6 +54,8 @@ docker:
 dockerlocal:
 	docker build -t $(INSTANCE)-local -f docker/user/Dockerfile-release .
 
+dockerrunlocal:
+	docker run -d --name $(INSTANCE)-local -p 8084:8084 --link my$(TESTDB) -e MONGO_HOST="my$(TESTDB):27017" $(INSTANCE)-local
 dockertravisbuild: 
 	docker build -t $(NAME):$(TAG) -f docker/user/Dockerfile-release .
 	docker build -t $(DBNAME):$(TAG) -f docker/user-db/Dockerfile docker/user-db/

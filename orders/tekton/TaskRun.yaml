@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: orders-runner
+spec:
+  serviceAccountName: orders-docker-hub
+  taskRef:
+    name: orders
+  params:
+  - name: IMAGE
+    value: "nbaghanim/orders"
+  resources:
+    inputs:
+    - name: level3-project
+      resourceRef:
+        name: orders-resource

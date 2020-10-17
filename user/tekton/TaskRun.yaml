@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: user-runner
+spec:
+  serviceAccountName: user-docker-hub
+  taskRef:
+    name: user
+  params:
+  - name: IMAGE
+    value: "nbaghanim/user"
+  resources:
+    inputs:
+    - name: level3-project
+      resourceRef:
+        name: user-resource

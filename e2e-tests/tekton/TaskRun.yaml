@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: e2e-tests-runner
+spec:
+  serviceAccountName: e2e-tests-docker-hub
+  taskRef:
+    name: e2e-tests
+  params:
+  - name: IMAGE
+    value: "nbaghanim/e2e-tests"
+  resources:
+    inputs:
+    - name: level3-project
+      resourceRef:
+        name: e2e-tests-resource

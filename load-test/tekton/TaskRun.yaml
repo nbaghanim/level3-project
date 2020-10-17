@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: load-test-runner
+spec:
+  serviceAccountName: load-test-docker-hub
+  taskRef:
+    name: load-test
+  params:
+  - name: IMAGE
+    value: "nbaghanim/load-test"
+  resources:
+    inputs:
+    - name: level3-project
+      resourceRef:
+        name: load-test-resource

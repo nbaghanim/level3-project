@@ -1,11 +1,11 @@
 apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
 metadata:
-  name: level3
+  name: user-resource
 spec:
   type: git
   params:
     - name: revision
       value: main
     - name: url
-      value: https://github.com/nbaghanim/level3-project/
+      value: https://github.com/nbaghanim/Level3-Project

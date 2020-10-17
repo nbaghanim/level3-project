@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: queue-master-runner
+spec:
+  serviceAccountName: queue-master-docker-hub
+  taskRef:
+    name: queue-master
+  params:
+  - name: IMAGE
+    value: "nbaghanim/queue-master"
+  resources:
+    inputs:
+    - name: level3-project
+      resourceRef:
+        name: queue-master-resource

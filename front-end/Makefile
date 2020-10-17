@@ -13,6 +13,17 @@ dev: clean test-image server
 compose:
 	@docker-compose -f test/docker-compose.yml up -d
 
+run: 
+		@docker run               \
+		-d                      \
+		--name $(IMAGE)     \
+		-v $$PWD:/usr/src/app   \
+		-P                      \
+		-e NODE_ENV=development \
+		-e PORT=8080            \
+		-p 8080:8080            \
+		$(IMAGE) /usr/local/bin/npm start
+
 # Installs Node.js project dependencies
 deps:
 	@docker run               \

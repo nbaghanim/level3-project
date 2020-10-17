@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: shipping-runner
+spec:
+  serviceAccountName: shipping-docker-hub
+  taskRef:
+    name: shipping
+  params:
+  - name: IMAGE
+    value: "nbaghanim/shipping"
+  resources:
+    inputs:
+    - name: level3-project
+      resourceRef:
+        name: shipping-resource

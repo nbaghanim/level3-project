@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: catalogue-runner
+spec:
+  serviceAccountName: catalogue-docker-hub
+  taskRef:
+    name: catalogue
+  params:
+  - name: IMAGE
+    value: "nbaghanim/catalogue"
+  resources:
+    inputs:
+    - name: level3-project
+      resourceRef:
+        name: catalogue-resource

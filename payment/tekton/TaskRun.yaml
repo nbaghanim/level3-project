@@ -1,16 +1,16 @@
 apiVersion: tekton.dev/v1beta1
 kind: TaskRun
 metadata:
-  name: dockr-runner
+  name: payment-runner
 spec:
-  serviceAccountName: nbaghanim-docker-hub
+  serviceAccountName: payment-docker-hub
   taskRef:
-    name: dockr
+    name: payment
   params:
   - name: IMAGE
-    value: "nbaghanim/front-end"
+    value: "nbaghanim/payment"
   resources:
     inputs:
     - name: level3-project
       resourceRef:
-        name: level3
+        name: payment-resource

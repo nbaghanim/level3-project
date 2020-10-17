@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: carts-runner
+spec:
+  serviceAccountName: carts-docker-hub
+  taskRef:
+    name: carts
+  params:
+  - name: IMAGE
+    value: "nbaghanim/carts"
+  resources:
+    inputs:
+    - name: level3-project
+      resourceRef:
+        name: carts-resource

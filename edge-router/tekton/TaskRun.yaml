@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: edge-router-runner
+spec:
+  serviceAccountName: edge-router-docker-hub
+  taskRef:
+    name: edge-router
+  params:
+  - name: IMAGE
+    value: "nbaghanim/edge-router"
+  resources:
+    inputs:
+    - name: level3-project
+      resourceRef:
+        name: edge-router-resource
