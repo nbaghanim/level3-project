@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # syntax=docker/dockerfile:experimental
 FROM maven:3-jdk-8 as build
 WORKDIR /tmp
@@ -13,6 +14,10 @@ COPY --from=build /tmp/target/queue-master.jar /queue-master.jar
 
 run chmod a+rx ./queue-master.jar
 	
+=======
+FROM java:openjdk-8-alpine
+
+>>>>>>> 690ff1159e47e201cfbfb6c34da6f966d207bfda
 ENV	SERVICE_USER=myuser \
 	SERVICE_UID=10001 \
 	SERVICE_GROUP=mygroup \
@@ -26,9 +31,20 @@ RUN	addgroup -g ${SERVICE_GID} ${SERVICE_GROUP} && \
 	ln -s /usr/lib/jvm/java-1.8-openjdk/lib/amd64/jli/libjli.so /lib/libjli.so && \
 	setcap 'cap_net_bind_service=+ep' $(readlink -f $(which java))
 
+<<<<<<< HEAD
 
 RUN	chown -R ${SERVICE_USER}:${SERVICE_GROUP} ./queue-master.jar
 
 USER ${SERVICE_USER}
 
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/urandom","-jar","./queue-master.jar", "--port=80"]
+=======
+WORKDIR /usr/src/app
+COPY *.jar ./app.jar
+
+RUN	chown -R ${SERVICE_USER}:${SERVICE_GROUP} ./app.jar
+
+USER ${SERVICE_USER}
+
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/urandom","-jar","./app.jar", "--port=80"]
+>>>>>>> 690ff1159e47e201cfbfb6c34da6f966d207bfda

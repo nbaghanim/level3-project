@@ -27,9 +27,18 @@ EXPOSE 80
 
 
 RUN	chmod +x /app && \
+<<<<<<< HEAD
 	chown -R ${SERVICE_USER}:${SERVICE_GROUP} /app/main && \
 	setcap 'cap_net_bind_service=+ep' /app/main
 
 USER ${SERVICE_USER}
 
 CMD ["/app/main", "-port=80"]
+=======
+	chown -R ${SERVICE_USER}:${SERVICE_GROUP} /app && \
+	setcap 'cap_net_bind_service=+ep' /app
+
+USER ${SERVICE_USER}
+
+CMD ["/app", "-port=80"]
+>>>>>>> 690ff1159e47e201cfbfb6c34da6f966d207bfda

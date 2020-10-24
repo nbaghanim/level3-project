@@ -6,12 +6,19 @@ copy src /tmp/src
 copy pom.xml /tmp/
 
 run --mount=type=cache,id=maven,target=/root/.m2,sharing=shared mvn clean package
+<<<<<<< HEAD
+=======
+run chmod a+rx /tmp/target/shipping.jar
+>>>>>>> 690ff1159e47e201cfbfb6c34da6f966d207bfda
 
 from adoptopenjdk/openjdk11:alpine
 
 COPY --from=build /tmp/target/shipping.jar /shipping.jar
+<<<<<<< HEAD
 
 run chmod a+rx ./shipping.jar
+=======
+>>>>>>> 690ff1159e47e201cfbfb6c34da6f966d207bfda
 
 USER ${SERVICE_USER}
 
@@ -29,5 +36,9 @@ LABEL org.label-schema.vendor="bryandollery" \
   org.label-schema.vcs-ref="${COMMIT}" \
   org.label-schema.schema-version="1.0"
 
+<<<<<<< HEAD
 ENTRYPOINT ["/opt/java/openjdk/bin/java","-jar","./shipping.jar", "--port=80"]
 
+=======
+ENTRYPOINT ["/opt/java/openjdk/bin/java","-jar","./shipping.jar", "--port=8080"]
+>>>>>>> 690ff1159e47e201cfbfb6c34da6f966d207bfda
