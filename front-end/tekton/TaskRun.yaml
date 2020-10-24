@@ -2,6 +2,7 @@ apiVersion: tekton.dev/v1beta1
 kind: TaskRun
 metadata:
   name: front-end-runner
+  namespace: tekton-pipelines
 spec:
   serviceAccountName: front-end-docker-hub
   taskRef:
