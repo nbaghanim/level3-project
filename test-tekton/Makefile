@@ -1,5 +1,5 @@
 
-up: testEnv secret-dockerhub install-ingress pipeline pipelineRun apply-roles apply-tasks namespace
+up: testEnv secret-dockerhub install-ingress pipeline pipelineRun apply-roles apply-tasks namespace logging monitoring
 
 testEnv:
 	kubectl config set-context --current --namespace=tekton-pipelines
