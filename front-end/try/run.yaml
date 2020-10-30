@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: front-end-run-images
+spec:
+  serviceAccountName: sock-shop
+  taskRef:
+    name: front-end
+  resources:
+    inputs:
+    - name: front-end-pr
+      resourceRef:
+        name: front-end-pr
+  params:
+    - name: IMAGE
+      value: "rayanah/front-end"

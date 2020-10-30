@@ -1,0 +1,33 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: rabbitmq-pipeline
+spec:
+  resources:
+    - name: level3-project
+      type: git
+  params:
+    - name: pathToYamlFile
+      description: The path to the yaml file to deploy within the git source
+      type: string
+    - name: imageUrl
+      description: Url of image repository
+      type: string
+    - name: imageTag
+      description: Tag to apply to the built image
+      type: string
+  tasks:
+  - name: run-deploy-image
+    taskRef:
+      name: rabbitmq-deploy
+    params:
+      - name: pathToYamlFile
+        value:  "$(params.pathToYamlFile)"
+      - name: imageUrl
+        value: "$(params.imageUrl)"
+      - name: imageTag
+        value: "$(params.imageTag)"
+    resources:
+      inputs:
+        - name: level3-project
+          resource: level3-project

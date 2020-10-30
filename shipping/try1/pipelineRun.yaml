@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineRun
+metadata:
+  name: shipping-run
+spec:
+  serviceAccountName: nbaghanim-docker-hub
+  pipelineRef:
+    name: shipping-pipeline
+  resources:
+    - name: shipping-pr
+      resourceRef:
+        name: shipping-pr

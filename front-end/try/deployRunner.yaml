@@ -1,0 +1,13 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: front-end-run
+spec:
+  serviceAccountName: nbaghanim-docker-hub
+  taskRef:
+    name: front-end-deploy-kubectl
+  resources:
+    inputs:
+    - name: front-end-pr
+      resourceRef:
+        name: front-end-pr

@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: run-test
+spec:
+  inputs:
+    resources:
+      - name: level3-project
+        type: git
+    params:
+      - name: image
+        description: image name
+      - name: imageTag
+        description: Tag of the images to be used.
+        default: "latest"
+  steps:
+    - name: e2e-js-test
+      image: "$(inputs.params.image):$(inputs.params.imageTag)"
+      command: ["/bin/sh"]
+      args:
+        - "-c"
+        - "/app/runner.sh"

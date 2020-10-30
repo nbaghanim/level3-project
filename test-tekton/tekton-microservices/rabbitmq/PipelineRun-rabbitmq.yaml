@@ -1,0 +1,20 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: rabbitmq-pipelinerun 
+spec:
+  pipelineRef:
+    name: rabbitmq-pipeline
+  resources:
+    - name: level3-project
+      resourceRef:
+        name: queue-master-resource
+  params:
+    - name: pathToYamlFile
+      value: "level3-project/deployment/rabbitmq/rabbitmq-dep.yaml"
+    - name: imageUrl
+      value: "rabbitmq"
+    - name: imageTag
+      value: "3.6.8-management"
+      
+  serviceAccountName: nbaghanim-docker-hub

@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: payment-
+spec:
+  serviceAccountName: nbaghanim-docker-hub
+  params:
+  - name: IMAGE
+    value: "nbaghanim/payment"
+  - name: pathToYamlFile
+    value: "./payment/payment-dep.yaml"
+  - name: pathToServiceFile
+    value: "./payment/payment-svc.yaml"
+  - name: namespace
+    value: "test"
+  - name: CONTEXT
+    value: "/workspace/level3-project/payment"
+  - name: DOCKERFILE
+    value: "/workspace/level3-project/payment/Dockerfile"
+  pipelineRef:
+    name: build-deploy-run
+  resources:
+  - name: level3-project
+    resourceRef:
+      name: level3

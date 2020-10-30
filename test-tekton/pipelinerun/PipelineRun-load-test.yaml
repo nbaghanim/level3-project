@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: load-test-pipelinerun 
+spec:
+  pipelineRef:
+    name: load-test-pipeline
+  resources:
+    - name: level3-project
+      resourceRef:
+        name: load-test-resource
+  params:
+    - name: pathToYamlFile
+      value: "level3-project/deploy/loadtest-dep.yaml"
+    - name: imageUrl
+      value: "nbaghanim/load-test"
+    - name: imageTag
+      value: "latest"
+    - name: IMAGE
+      value: "nbaghanim/load-test"
+      
+  serviceAccountName: nbaghanim-docker-hub

@@ -1,0 +1,34 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: only-run
+spec:
+  resources:
+  - name: level3-project
+    type: git
+  params:
+  - name: IMAGE
+    type: string
+  - name: pathToYamlFile
+    type: string
+  - name: pathToServiceFile
+    type: string
+  - name: namespace
+    type: string
+  tasks:
+  - name: run-image
+    taskRef:
+      name: deploy-using-kubectl
+    params:
+    - name: pathToYamlFile
+      value: "$(params.pathToYamlFile)"
+    - name: pathToServiceFile
+      value: "$(params.pathToServiceFile)"
+    - name: image
+      value: "$(params.IMAGE)"
+    - name: namespace
+      value: "$(params.namespace)"
+    resources:
+      inputs:
+      - name: level3-project
+        resource: level3-project

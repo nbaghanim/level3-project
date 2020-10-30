@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: front-end
+spec:
+  serviceAccountName: nbaghanim-docker-hub
+  taskRef:
+    name: front-end
+  params:
+  - name: IMAGE
+    value: "nbaghanim/front-end"
+  resources:
+    inputs:
+    - name: level-3-project
+      resourceRef:
+        name: level-3-project

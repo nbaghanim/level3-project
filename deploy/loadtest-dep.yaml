@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: load-test
+  labels:
+    name: load-test
+spec:
+  selector:
+    matchLabels:
+      name: load-test
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: load-test
+    spec:
+      containers:
+      - name: load-test
+        image: __IMAGE__
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do locust --host http://front-end.sock-shop.svc.cluster.local -f /config/locustfile.py --clients 5 --hatch-rate 5 --num-request 100 --no-web; done"]
+      nodeSelector:
+        beta.kubernetes.io/os: linux

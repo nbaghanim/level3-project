@@ -1,0 +1,12 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineRun
+metadata:
+  name: front-end-run
+spec:
+  serviceAccountName: sock-shop
+  pipelineRef:
+    name: front-end-pipeline 
+  resources:
+    - name: front-end-pr
+      resourceRef:
+        name: front-end-pr

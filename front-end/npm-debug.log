@@ -19,7 +19,7 @@
 9 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:222:5)
 10 verbose pkgid microservices-demo-front-end@0.0.1
 11 verbose cwd /usr/src/app
-12 error Linux 5.4.0-48-generic
+12 error Linux 5.4.0-1028-aws
 13 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "start"
 14 error node v4.9.1
 15 error npm  v2.15.11

@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: shipping-pipeline
+spec:
+  resources:
+    - name: shipping-pr
+      type: git
+  tasks:
+    - name: build
+      taskRef:
+        name: shipping
+      resources:
+        inputs: 
+        - name: shipping-pr
+          resource: shipping-pr
+    - name: shipping-deploy-kubectl
+      runAfter: ["build"]
+      taskRef:
+        name: shipping-deploy-kubectl
+      resources:
+        inputs:
+        - name: shipping-pr
+          resource: shipping-pr

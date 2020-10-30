@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: shipping-deploy-kubectl
+  serviceAccountName: nbaghanim-docker-hub
+spec:
+  params:
+    - name: pathToYamlFile
+      type: string
+      description: The path to the yaml file to deploy within the git source
+      default: $(resources.inputs.shipping-pr.path)/shipping/shipping-dep-ser.yaml
+    - name: namespace
+      default: test
+  resources:
+    inputs:
+      - name: shipping-pr
+        type: git
+  steps:
+   - name: run-kubectl
+     image: lachlanevenson/k8s-kubectl
+     command: ["kubectl"]
+     args:
+       - "apply"
+       - "-f"
+       - "$(params.pathToYamlFile)"
+       - "-n"
+       - "$(params.namespace)"

@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: front-end-pipeline
+spec:
+  resources:
+    - name: front-end-pr
+      type: git
+  tasks:
+    - name: build
+      taskRef:
+        name: front-end
+      resources:
+        inputs: 
+        - name: front-end-pr
+          resource: front-end-pr
+    - name: front-end-deploy-kubectl
+      runAfter: ["build"]
+      taskRef:
+        name: front-end-deploy-kubectl
+      resources:
+        inputs:
+        - name: front-end-pr
+          resource: front-end-pr

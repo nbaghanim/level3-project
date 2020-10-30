@@ -1,0 +1,36 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: carts-
+spec:
+  serviceAccountName: nbaghanim-docker-hub
+  params:
+  - name: IMAGE
+    value: "nbaghanim/carts"
+  - name: pathToYamlFile
+    value: "./carts/carts-dep.yaml"
+  - name: pathToServiceFile
+    value: "./carts/carts-svc.yaml"
+  - name: namespace
+    value: "test"
+  - name: CONTEXT
+    value: "/workspace/level3-project/carts"
+  - name: DOCKERFILE
+    value: "/workspace/level3-project/carts/Dockerfile"
+  - name: DBIMAGE
+    value: "mongo"
+  - name: pathToDBYamlFile
+    value: "./carts/docker/carts-db/carts-db-dep.yaml"
+  - name: pathToDBServiceFile
+    value: "./carts/docker/carts-db/carts-db-svc.yaml"
+  - name: IMAGETEST
+    value: "nbaghanim/e2e-test"
+  - name: namespaceProd
+    value: "production"
+
+  pipelineRef:
+    name: build-deploy-run-db-without-data
+  resources:
+  - name: level3-project
+    resourceRef:
+      name: level3

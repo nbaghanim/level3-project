@@ -1,0 +1,32 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: carts-pipelinerun 
+spec:
+  pipelineRef:
+    name: carts-pipeline
+  resources:
+    - name: level3-project
+      resourceRef:
+        name: carts-resource
+  params:
+    - name: CONTEXT
+      value: "/workspace/level3-project/carts"
+    - name: DOCKERFILE
+      value: "/workspace/level3-project/carts/Dockerfile"
+    - name: IMAGE
+      value: "nbaghanim/carts"
+    - name: pathToYamlFile
+      value: "level3-project/deploy/carts-dep.yaml"
+    - name: imageUrl
+      value: "nbaghanim/carts"
+    - name: imageTag
+      value: "latest"
+    - name: pathToYamlFile-db
+      value: "level3-project/deploy/carts-db-dep.yaml"
+    - name: imageUrl-db
+      value: "mongo"
+    - name: imageTag-db
+      value: "latest"
+      
+  serviceAccountName: nbaghanim-docker-hub

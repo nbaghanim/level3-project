@@ -1,0 +1,111 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: catalogue-pipeline
+spec:
+  resources:
+    - name: level3-project
+      type: git
+  params:
+    - name: IMAGE
+      type: string
+      default: "danya97/catalogue"
+    - name: CONTEXT
+      type: string
+      default: "/workspace/level3-project/catalogue"
+    - name: DOCKERFILE
+      type: string
+      default: "/workspace/level3-project/catalogue/Dockerfile"
+    - name: IMAGE-db
+      type: string
+      default: "danya97/catalogue-db"
+    - name: CONTEXT-db
+      type: string
+      default: "/workspace/level3-project/catalogue/docker/catalogue-db"
+    - name: DOCKERFILE-db
+      type: string
+      default: "/workspace/level3-project/catalogue/docker/catalogue-db/Dockerfile"
+    - name: pathToYamlFile
+      type: string
+      default: "level3-project/deploy/catalogue-dep.yaml"
+    - name: imageUrl
+      type: string
+      default: "danya97/catalogue"
+    - name: imageTag
+      type: string
+      default: "latest"
+    - name: pathToYamlFile-db
+      type: string
+      default: "level3-project/deploy/catalogue-db-dep.yaml"
+    - name: imageUrl-db
+      type: string
+      default: "danya97/catalogue-db"
+    - name: imageTag-db
+      type: string
+      default: "latest"
+  tasks:
+  - name: build-push-image-db
+    taskRef:
+      name: build-push-task
+    params:
+      - name: IMAGE
+        value: "$(params.IMAGE-db)"
+      - name: CONTEXT
+        value: "$(params.CONTEXT-db)"
+      - name: DOCKERFILE
+        value: "$(params.DOCKERFILE-db)"
+    resources:
+      inputs:
+        - name: level3-project
+          resource: level3-project
+  - name: run-db-image
+    taskRef:
+      name: deploy-task
+    runAfter:
+      - build-push-image-db
+    params:
+      - name: pathToYamlFile
+        value:  "$(params.pathToYamlFile-db)"
+      - name: imageUrl
+        value: "$(params.imageUrl-db)"
+      - name: imageTag
+        value: "$(params.imageTag-db)"
+    resources: 
+      inputs:
+        - name: level3-project
+          resource: level3-project  
+  - name: build-push-image
+    taskRef:
+      name: build-push-task
+    runAfter:
+      - build-push-image-db      
+      - run-db-image
+    params:
+      - name: IMAGE
+        value: "$(params.IMAGE)"
+      - name: CONTEXT
+        value: "$(params.CONTEXT)"
+      - name: DOCKERFILE
+        value: "$(params.DOCKERFILE)"
+    resources:
+      inputs:
+        - name: level3-project
+          resource: level3-project
+  - name: microservice-deploy
+    taskRef:
+      name: deploy-task
+    runAfter:
+      - build-push-image-db
+      - run-db-image
+      - build-push-image
+    params:
+      - name: pathToYamlFile
+        value:  "$(params.pathToYamlFile)"
+      - name: imageUrl
+        value: "$(params.imageUrl)"
+      - name: imageTag
+        value: "$(params.imageTag)"
+    resources:
+      inputs:
+        - name: level3-project
+          resource: level3-project

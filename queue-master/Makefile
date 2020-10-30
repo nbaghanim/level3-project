@@ -1,8 +1,6 @@
 build:
-	DOCKER_BUILDKIT=1 docker build --progress=plain --tag qmaster .
+	DOCKER_BUILDKIT=1 docker build --progress=plain --tag nbaghanim/queue-master .
 
 run:
-	docker run -it --rm -d -p 8045:80 qmaster
+	docker run -d -it --rm nbaghanim/queue-master
 
-test:
-	curl localhost:8045/health | jq

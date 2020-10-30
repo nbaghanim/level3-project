@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: front-end-pipelinerun 
+spec:
+  pipelineRef:
+    name: front-end-pipeline
+  resources:
+    - name: level3-project
+      resourceRef:
+        name: front-end-resource
+  params:
+    - name: CONTEXT
+      value: "/workspace/level3-project/front-end"
+    - name: DOCKERFILE
+      value: "/workspace/level3-project/front-end/Dockerfile"
+    - name: pathToYamlFile
+      value: "level3-project/deploy/front-end-dep.yaml"
+    - name: imageUrl
+      value: "nbaghanim/front-end"
+    - name: imageTag
+      value: "latest"
+    - name: IMAGE
+      value: "nbaghanim/front-end"
+      
+  serviceAccountName: nbaghanim-docker-hub
+

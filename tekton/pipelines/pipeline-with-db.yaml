@@ -1,0 +1,99 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-deploy-run-db
+spec:
+  resources:
+  - name: level3-project
+    type: git
+  params:
+  - name: IMAGE
+    type: string
+  - name: pathToYamlFile
+    type: string
+  - name: pathToServiceFile
+    type: string
+  - name: namespace
+    type: string
+  - name: CONTEXT
+    type: string
+  - name: DOCKERFILE
+    type: string
+  - name: DBIMAGE
+    type: string
+  - name: pathToDBYamlFile
+    type: string
+  - name: pathToDBServiceFile
+    type: string
+  - name: DBCONTEXT
+    type: string
+  - name: DBDOCKERFILE
+    type: string
+
+  tasks:
+  - name: build-push-db
+    taskRef:
+      name: build-push
+    params:
+    - name: IMAGE
+      value: "$(params.DBIMAGE)"
+    - name: CONTEXT
+      value: "$(params.DBCONTEXT)"
+    - name: DOCKERFILE
+      value: "$(params.DBDOCKERFILE)"
+    resources:
+      inputs:
+      - name: level3-project
+        resource: level3-project
+  - name: run-db
+    taskRef:
+      name: deploy-using-kubectl
+    runAfter:
+      - build-push-db
+    params:
+    - name: pathToYamlFile
+      value: "$(params.pathToDBYamlFile)"
+    - name: pathToServiceFile
+      value: "$(params.pathToDBServiceFile)"
+    - name: image
+      value: "$(params.DBIMAGE)"
+    - name: namespace
+      value: "$(params.namespace)"
+    resources:
+      inputs:
+      - name: level3-project
+        resource: level3-project
+  - name: build-push-image
+    taskRef:
+      name: build-push
+    params: 
+    - name: IMAGE
+      value: "$(params.IMAGE)"
+    - name: CONTEXT
+      value: "$(params.CONTEXT)"
+    - name: DOCKERFILE
+      value: "$(params.DOCKERFILE)"
+    resources:
+      inputs:
+      - name: level3-project
+        resource: level3-project
+  - name: run-image
+    taskRef:
+      name: deploy-using-kubectl
+    runAfter:
+      - build-push-image
+      - run-db
+    params:
+    - name: pathToYamlFile
+      value: "$(params.pathToYamlFile)"
+    - name: pathToServiceFile
+      value: "$(params.pathToServiceFile)"
+    - name: image
+      value: "$(params.IMAGE)"
+    - name: namespace
+      value: "$(params.namespace)"
+    resources:
+      inputs:
+      - name: level3-project
+        resource: level3-project
+

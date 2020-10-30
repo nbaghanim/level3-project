@@ -1,0 +1,36 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: user-
+spec:
+  serviceAccountName: nbaghanim-docker-hub
+  params:
+  - name: IMAGE
+    value: "nbaghanim/user"
+  - name: pathToYamlFile
+    value: "./user/user-dep.yaml"
+  - name: pathToServiceFile
+    value: "./user/user-svc.yaml"
+  - name: namespace
+    value: "test"
+  - name: CONTEXT
+    value: "/workspace/level3-project/user"
+  - name: DOCKERFILE
+    value: "/workspace/level3-project/user/Dockerfile"
+  - name: DBIMAGE
+    value: "nbaghanim/user-db"
+  - name: pathToDBYamlFile
+    value: "./user/docker/user-db/user-db-dep.yaml"
+  - name: pathToDBServiceFile
+    value: "./user/docker/user-db/user-db-svc.yaml"
+  - name: DBCONTEXT
+    value: "/workspace/level3-project/user/docker/user-db"
+  - name: DBDOCKERFILE
+    value: "/workspace/level3-project/user/docker/user-db/Dockerfile"
+
+  pipelineRef:
+    name: build-deploy-run-db
+  resources:
+  - name: level3-project
+    resourceRef:
+      name: level3

@@ -2,8 +2,6 @@
 #
 # Run locust load test
 #
-
-# TARGET_HOST is not set; use '-h hostname:port'
 #####################################################################
 ARGS="$@"
 HOST="${1}"

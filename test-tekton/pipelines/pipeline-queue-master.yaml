@@ -1,0 +1,59 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: queue-master-pipeline
+spec:
+  resources:
+    - name: level3-project
+      type: git
+  params:
+    - name: CONTEXT
+      type: string
+      default: "/workspace/level3-project/queue-master"
+    - name: IMAGE
+      type: string
+      default: "amerahsultan1/queue-master"
+    - name: DOCKERFILE
+      type: string
+      default: "/workspace/level3-project/queue-master/Dockerfile"
+    - name: pathToYamlFile
+      type: string
+      default: "level3-project/deployment/queue-master/queue-master-dep.yaml"
+    - name: imageUrl
+      type: string
+      default: "amerahsultan1/queue-master"
+    - name: imageTag
+      type: string
+      default: "latest"
+  tasks:
+  - name: build-push-image
+    taskRef:
+      name: build-push-task
+    params:
+      - name: CONTEXT
+        value: "$(params.CONTEXT)"
+      - name: IMAGE
+        value: "$(params.IMAGE)"
+      - name: DOCKERFILE
+        value: "$(params.DOCKERFILE)"
+    resources:
+      inputs:
+        - name: level3-project
+          resource: level3-project
+  - name: microservice-deploy
+    taskRef:
+      name: deploy-task
+    runAfter:
+      - build-push-image
+    params:
+      - name: pathToYamlFile
+        value:  "$(params.pathToYamlFile)"
+      - name: imageUrl
+        value: "$(params.imageUrl)"
+      - name: imageTag
+        value: "$(params.imageTag)"
+    resources:
+      inputs:
+        - name: level3-project
+          resource: level3-project
+

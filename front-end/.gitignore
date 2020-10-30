@@ -3,7 +3,5 @@
 
 # Ignore coverage reports
 /coverage
+
 .idea
-
-
-# **/Secrets.yaml

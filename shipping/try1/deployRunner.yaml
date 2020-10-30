@@ -1,0 +1,13 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: shipping-run
+spec:
+  serviceAccountName: nbaghanim-docker-hub
+  taskRef:
+    name: shipping-deploy-kubectl
+  resources:
+    inputs:
+    - name: shipping-pr
+      resourceRef:
+        name: shipping-pr

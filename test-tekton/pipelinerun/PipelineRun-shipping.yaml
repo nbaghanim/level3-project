@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: shipping-pipelinerun 
+spec:
+  pipelineRef:
+    name: shipping-pipeline
+  resources:
+    - name: level3-project
+      resourceRef:
+        name: shipping-resource
+  params:
+    - name: CONTEXT
+      value: "/workspace/level3-project/shipping"
+    - name: DOCKERFILE
+      value: "/workspace/level3-project/shipping/Dockerfile"
+    - name: pathToYamlFile
+      value: "level3-project/deploy/shipping-dep.yaml"
+    - name: imageUrl
+      value: "nbaghanim/shipping"
+    - name: imageTag
+      value: "latest"
+    - name: IMAGE
+      value: "nbaghanim/shipping"
+      
+  serviceAccountName: nbaghanim-docker-hub

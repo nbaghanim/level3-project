@@ -1,0 +1,33 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: front-end-
+spec:
+  serviceAccountName: nbaghanim-docker-hub
+  params:
+  - name: IMAGE
+    value: "nbaghanim/front-end"
+  - name: pathToYamlFile
+    value: "./front-end/front-end-dep.yaml"
+  - name: pathToServiceFile
+    value: "./front-end/front-end-svc.yaml"
+  - name: namespace
+    value: "test"
+  - name: CONTEXT
+    value: "/workspace/level3-project/front-end"
+  - name: DOCKERFILE
+    value: "/workspace/level3-project/front-end/Dockerfile"
+  - name: pathToIngressFile
+    value: "./front-end/front-end-ingress.yaml"
+  - name: IMAGETEST
+    value: "nbaghanim/e2e-test"
+  - name: namespaceProd
+    value: "production"
+  - name: pathToServiceFileTestPort
+    value: "./front-end/front-end-svc-test.yaml"
+  pipelineRef:
+    name: build-deploy-run-ingress
+  resources:
+  - name: level3-project
+    resourceRef:
+      name: level3

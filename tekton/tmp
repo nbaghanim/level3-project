@@ -1,0 +1,48 @@
+Fontconfig error: Cannot load default config file
+[37;46;1mTest file: ./cart_test.js                                                       [0m
+[33m# User interacts with the cart[0m
+Fontconfig error: Cannot load default config file
+[32;1mPASS[0m cart gets updated with user selection
+[32;1mPASS[0m User interacts with the cart [32;1m(1 test)[0m
+[37;42;1mPASS 1 test executed in 1.739s, 1 passed, 0 failed, 0 dubious, 0 skipped.       [0m
+Fontconfig error: Cannot load default config file
+[37;46;1mTest file: ./catalogue_test.js                                                  [0m
+[33m# User interacts with the catalogue[0m
+Fontconfig error: Cannot load default config file
+[32;1mPASS[0m user is taken to the catalogue
+[32;1mPASS[0m user is presented with 6 products by default
+[32;1mPASS[0m User interacts with the catalogue [32;1m(2 tests)[0m
+[37;42;1mPASS 2 tests executed in 0.956s, 2 passed, 0 failed, 0 dubious, 0 skipped.      [0m
+Fontconfig error: Cannot load default config file
+[37;46;1mTest file: ./checkout_test.js                                                   [0m
+[33m# User buys some socks[0m
+Fontconfig error: Cannot load default config file
+[33m# user logged in[0m
+[33m# accessing the catalogue[0m
+[32;1mPASS[0m cart is updated with one product
+[32;1mPASS[0m user is taken to the shopping cart overview
+[32;1mPASS[0m user is presented with the checkout button
+[32;1mPASS[0m the checkout button is enabled
+[32;1mPASS[0m user is taken to the orders page
+[32;1mPASS[0m User buys some socks [32;1m(5 tests)[0m
+[37;42;1mPASS 5 tests executed in 1.813s, 5 passed, 0 failed, 0 dubious, 0 skipped.      [0m
+Fontconfig error: Cannot load default config file
+[37;46;1mTest file: ./homepage_test.js                                                   [0m
+[33m# Home page looks sexy[0m
+Fontconfig error: Cannot load default config file
+[32;1mPASS[0m homepage title is the one expected
+[32;1mPASS[0m login link is present
+[32;1mPASS[0m user is not logged in
+[32;1mPASS[0m cart is empty
+[32;1mPASS[0m user is presented with the offer of the day
+[32;1mPASS[0m Home page looks sexy [32;1m(5 tests)[0m
+[37;42;1mPASS 5 tests executed in 0.7s, 5 passed, 0 failed, 0 dubious, 0 skipped.        [0m
+Fontconfig error: Cannot load default config file
+[37;46;1mTest file: ./login_test.js                                                      [0m
+[33m# User logs in[0m
+Fontconfig error: Cannot load default config file
+[32;1mPASS[0m user does not see the login dialogue
+[32;1mPASS[0m user is presented with the login dialogue
+[32;1mPASS[0m user is logged in
+[32;1mPASS[0m User logs in [32;1m(3 tests)[0m
+[37;42;1mPASS 3 tests executed in 2.836s, 3 passed, 0 failed, 0 dubious, 0 skipped.      [0m

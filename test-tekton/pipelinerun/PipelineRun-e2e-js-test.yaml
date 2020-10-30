@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: e2e-js-test-pipelinerun 
+spec:
+  pipelineRef:
+    name: e2e-js-test-pipeline
+  resources:
+    - name: level3-project
+      resourceRef:
+        name: e2e-js-test-resource
+  params:
+    - name: imageUrl
+      value: "nbaghanim/e2e-test-js"
+    - name: imageTag
+      value: "latest"
+    - name: IMAGE
+      value: "nbaghanim/e2e-test-js"
+    - name: pathToYamlFile
+      value: "level3-project/deploy/deploy-prod.yaml"    
+  serviceAccountName: nbaghanim-docker-hub

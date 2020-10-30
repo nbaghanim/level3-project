@@ -1,0 +1,84 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: carts-pipeline
+spec:
+  resources:
+    - name: level3-project
+      type: git
+  params:
+    - name: CONTEXT
+      type: string
+      default: "/workspace/level3-project/carts"
+    - name: IMAGE
+      type: string
+      default: "danya97/carts"
+    - name: DOCKERFILE
+      type: string
+      default: "/workspace/level3-project/carts/Dockerfile"
+    - name: pathToYamlFile
+      type: string
+      default: "level3-project/deploy/carts-dep.yaml"
+    - name: imageUrl
+      type: string
+      default: "danya97/carts"
+    - name: imageTag
+      type: string
+      default: "latest"
+    - name: pathToYamlFile-db
+      type: string
+      default: "level3-project/deploy/carts-db-dep.yaml"
+    - name: imageUrl-db
+      type: string
+      default: "mongo"
+    - name: imageTag-db
+      type: string
+      default: "latest"
+  tasks:
+  - name: run-db-image
+    taskRef:
+      name: deploy-task
+    params:
+      - name: pathToYamlFile
+        value:  "$(params.pathToYamlFile-db)"
+      - name: imageUrl
+        value: "$(params.imageUrl-db)"
+      - name: imageTag
+        value: "$(params.imageTag-db)"
+    resources: 
+      inputs:
+        - name: level3-project
+          resource: level3-project  
+  - name: build-push-image
+    taskRef:
+      name: build-push-task
+    runAfter:
+      - run-db-image
+    params:
+      - name: CONTEXT
+        value: "$(params.CONTEXT)"
+      - name: IMAGE
+        value: "$(params.IMAGE)"
+      - name: DOCKERFILE
+        value: "$(params.DOCKERFILE)"
+    resources:
+      inputs:
+        - name: level3-project
+          resource: level3-project
+  - name: microservice-deploy
+    taskRef:
+      name: deploy-task
+    runAfter:
+      - run-db-image
+      - build-push-image
+    params:
+      - name: pathToYamlFile
+        value:  "$(params.pathToYamlFile)"
+      - name: imageUrl
+        value: "$(params.imageUrl)"
+      - name: imageTag
+        value: "$(params.imageTag)"
+    resources:
+      inputs:
+        - name: level3-project
+          resource: level3-project

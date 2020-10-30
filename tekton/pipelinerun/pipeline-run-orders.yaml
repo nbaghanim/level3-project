@@ -1,0 +1,32 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: orders-
+spec:
+  serviceAccountName: nbaghanim-docker-hub
+  params:
+  - name: IMAGE
+    value: "nbaghanim/orders"
+  - name: pathToYamlFile
+    value: "./orders/orders-dep.yaml"
+  - name: pathToServiceFile
+    value: "./orders/orders-svc.yaml"
+  - name: namespace
+    value: "test"
+  - name: CONTEXT
+    value: "/workspace/level3-project/orders"
+  - name: DOCKERFILE
+    value: "/workspace/level3-project/orders/Dockerfile"
+  - name: DBIMAGE
+    value: "mongo:3.4"
+  - name: pathToDBYamlFile
+    value: "./orders/docker/orders-db/orders-db-dep.yaml"
+  - name: pathToDBServiceFile
+    value: "./orders/docker/orders-db/orders-db-svc.yaml"
+
+  pipelineRef:
+    name: build-deploy-run-db-without-data
+  resources:
+  - name: level3-project
+    resourceRef:
+      name: level3

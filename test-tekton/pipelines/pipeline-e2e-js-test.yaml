@@ -1,0 +1,69 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: e2e-js-test-pipeline
+spec:
+  resources:
+    - name: level3-project
+      type: git
+  params:
+    - name: IMAGE
+      type: string
+      default: "danya97/e2e-test-js"
+    - name: DOCKERFILE
+      type: string
+      default: "/workspace/level3-project/e2e-test-js/Dockerfile"
+    - name: CONTEXT
+      type: string
+      default: "/workspace/level3-project/e2e-test-js"
+    - name: imageUrl
+      type: string
+      default: "danya97/e2e-test-js"
+    - name: imageTag
+      type: string
+      default: "latest"
+    - name: pathToYamlFile
+      type: string
+      default: "level3-project/deploy/deploy-prod.yaml"
+  tasks:
+  - name: build-push-image
+    taskRef:
+      name: build-push-task
+    params:
+      - name: IMAGE
+        value: "$(params.IMAGE)"
+      - name: DOCKERFILE
+        value: "$(params.DOCKERFILE)"
+      - name: CONTEXT
+        value: "$(params.CONTEXT)"
+    resources:
+      inputs:
+        - name: level3-project
+          resource: level3-project
+  - name: run-test
+    taskRef:
+      name: run-e2e-test-task
+    runAfter:
+      - build-push-image
+    params:
+      - name: imageUrl
+        value: "$(params.imageUrl)"
+      - name: imageTag
+        value: "$(params.imageTag)"
+    resources:
+      inputs:
+        - name: level3-project
+          resource: level3-project
+  - name: deploy-prod
+    taskRef:
+      name: deploy-task-prod
+    runAfter:
+      - build-push-image
+      - run-test
+    params:
+      - name: pathToYamlFile
+        value: "$(params.pathToYamlFile)"
+    resources:
+      inputs:
+        - name: level3-project
+          resource: level3-project

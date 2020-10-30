@@ -6,7 +6,6 @@ WORKDIR /go/src/github.com/microservices-demo/catalogue
 RUN go get -u github.com/FiloSottile/gvt
 RUN gvt restore && \
     CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app github.com/microservices-demo/catalogue/cmd/cataloguesvc
-
 FROM alpine:3.4
 
 ENV	SERVICE_USER=myuser \
@@ -26,19 +25,18 @@ RUN	chmod +x /app && \
 	chown -R ${SERVICE_USER}:${SERVICE_GROUP} /app /images && \
 	setcap 'cap_net_bind_service=+ep' /app
 
-USER ${SERVICE_USER}
-
+#USER ${SERVICE_USER}
 ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG COMMIT
 
-LABEL org.label-schema.vendor="Weaveworks" \
+LABEL org.label-schema.vendor="nbaghanim" \
   org.label-schema.build-date="${BUILD_DATE}" \
   org.label-schema.version="${BUILD_VERSION}" \
   org.label-schema.name="Socks Shop: Catalogue" \
   org.label-schema.description="REST API for Catalogue service" \
-  org.label-schema.url="https://github.com/microservices-demo/catalogue" \
-  org.label-schema.vcs-url="github.com:microservices-demo/catalogue.git" \
+  org.label-schema.url="https://github.com/nbaghanim/project-level3/catalogue" \
+  org.label-schema.vcs-url="github.com:nbaghanim/project-level3/catalogue.git" \
   org.label-schema.vcs-ref="${COMMIT}" \
   org.label-schema.schema-version="1.0"
 

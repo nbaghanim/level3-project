@@ -1,0 +1,30 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: user-pipelinerun 
+spec:
+  pipelineRef:
+    name: user-pipeline
+  resources:
+    - name: level3-project
+      resourceRef:
+        name: user-resource
+  params:
+    - name: IMAGE-db
+      value: "nbaghanim/user-db"
+    - name: IMAGE
+      value: "nbaghanim/user"
+    - name: pathToYamlFile
+      value: "level3-project/deploy/user-dep.yaml"
+    - name: imageUrl
+      value: "nbaghanim/user"
+    - name: imageTag
+      value: "latest"
+    - name: pathToYamlFile-db
+      value: "level3-project/deploy/user-db-dep.yaml"
+    - name: imageUrl-db
+      value: "nbaghanim/user-db"
+    - name: imageTag-db
+      value: "latest"
+      
+  serviceAccountName: nbaghanim-docker-hub

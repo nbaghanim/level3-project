@@ -1,9 +1,8 @@
-FROM python:3.6
+FROM python:3.7
 
 USER root
 
 # Install locust
-RUN pip install --upgrade pip
 RUN pip install pyzmq locust faker
 
 ADD locustfile.py /config/locustfile.py

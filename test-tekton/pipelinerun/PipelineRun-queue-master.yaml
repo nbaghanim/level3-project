@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: queue-master-pipelinerun 
+spec:
+  pipelineRef:
+    name: queue-master-pipeline
+  resources:
+    - name: level3-project
+      resourceRef:
+        name: queue-master-resource
+  params:
+    - name: CONTEXT
+      value: "/workspace/level3-project/queue-master"
+    - name: DOCKERFILE
+      value: "/workspace/level3-project/queue-master/Dockerfile"
+    - name: pathToYamlFile
+      value: "level3-project/deploy/queue-master-dep.yaml"
+    - name: imageUrl
+      value: "nbaghanim/queue-master"
+    - name: imageTag
+      value: "latest"
+    - name: IMAGE
+      value: "nbaghanim/queue-master"
+      
+  serviceAccountName: nbaghanim-docker-hub

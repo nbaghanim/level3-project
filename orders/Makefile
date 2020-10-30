@@ -1,8 +1,6 @@
 build:
-	DOCKER_BUILDKIT=1 docker build --progress=plain --tag orders .
+	DOCKER_BUILDKIT=1 docker build --progress=plain --tag nbaghanim/orders .
 
 run:
-	docker run -it --rm orders
+	docker run -it --rm nbaghanim/orders
 
-localtest:
-	docker run -it --rm -d -p 8029:80 orders

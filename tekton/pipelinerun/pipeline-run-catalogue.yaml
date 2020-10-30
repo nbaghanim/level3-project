@@ -1,0 +1,36 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: catalogue-
+spec:
+  serviceAccountName: nbaghanim-docker-hub
+  params:
+  - name: IMAGE
+    value: "nbaghanim/catalogue"
+  - name: pathToYamlFile
+    value: "./catalogue/catalogue-dep.yaml"
+  - name: pathToServiceFile
+    value: "./catalogue/catalogue-svc.yaml"
+  - name: namespace
+    value: "test"
+  - name: CONTEXT
+    value: "/workspace/level3-project/catalogue"
+  - name: DOCKERFILE
+    value: "/workspace/level3-project/catalogue/Dockerfile"
+  - name: DBIMAGE
+    value: "nbaghanim/catalogue-db"
+  - name: pathToDBYamlFile
+    value: "./catalogue/docker/catalogue-db/catalogue-db-dep.yaml"
+  - name: pathToDBServiceFile
+    value: "./catalogue/docker/catalogue-db/catalogue-db-svc.yaml"
+  - name: DBCONTEXT
+    value: "/workspace/level3-project/catalogue/docker/catalogue-db"
+  - name: DBDOCKERFILE
+    value: "/workspace/level3-project/catalogue/docker/catalogue-db/Dockerfile"
+
+  pipelineRef:
+    name: build-deploy-run-db
+  resources:
+  - name: level3-project
+    resourceRef:
+      name: level3
