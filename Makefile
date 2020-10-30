@@ -14,14 +14,14 @@ secret-dockerhub:
 	kubectl create secret generic nbaghanim-docker-hub \
 	 --from-file=.dockerconfigjson=/home/ubuntu/.docker/config.json \
  	--type=kubernetes.io/dockerconfigjson -n test	
-<<<<<<< HEAD
 
 
 create-deploy-images:
 	kubectl create -f ./front-end/front-end-dep.yaml -n test
 	kubectl create -f ./front-end/front-end-ingress.yaml -n test
 	kubectl create -f ./front-end/front-end-svc.yaml -n test
-	kubectl create -f ./carts/carts-db-dep.yaml 	kubectl create -f ./catalogue/catalogue-db-dep.yaml -n test
+	kubectl create -f ./carts/carts-db-dep.yaml 	
+	kubectl create -f ./catalogue/catalogue-db-dep.yaml -n test
 	kubectl create -f ./catalogue/catalogue-db-svc.yaml -n test
 	kubectl create -f ./catalogue/catalogue-dep.yaml -n test
 	kubectl create -f ./catalogue/catalogue-svc.yaml -n test
@@ -40,9 +40,6 @@ create-deploy-images:
 	kubectl create -f ./user/user-dep.yaml -n test
 	kubectl create -f ./user/user-svc.yaml -n test
 
-=======
-	
->>>>>>> 3a7158c8681de87bf0cf9e02d2d3fbaa44bce766
 deploy-images:
 	kubectl apply -f ./front-end/front-end-dep.yaml -n test
 	kubectl apply -f ./front-end/front-end-ingress.yaml -n test

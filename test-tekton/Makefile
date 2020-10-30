@@ -16,10 +16,10 @@ pipelineRun:
 resource:
 	kubectl create -f ./PipelineResource/ -n test
 
-role:
+apply-roles:
 	kubectl apply -f ./role/
 	
-tasks:
+apply-tasks:
 	kubectl apply -f ./tekton-microservices/carts/ -n test
 	kubectl apply -f ./tekton-microservices/catalogue/ -n test
 	kubectl apply -f ./tekton-microservices/e2e-js-test/ -n test
@@ -30,6 +30,8 @@ tasks:
 	kubectl apply -f ./tekton-microservices/orders/ -n test
 	kubectl apply -f ./tekton-microservices/payment/ -n test
 	kubectl apply -f ./tekton-microservices/shipping/ -n test
+	kubectl apply -f ./tekton-microservices/user/ -n test
+	kubectl apply -f ./tekton-microservices/queue-master/ -n test
 
 delete-tasks:
 	
@@ -43,7 +45,9 @@ delete-tasks:
 	kubectl delete -f ./tekton-microservices/orders/ -n test
 	kubectl delete -f ./tekton-microservices/payment/ -n test
 	kubectl delete -f ./tekton-microservices/shipping/ -n test
-	
+	kubectl delete -f ./tekton-microservices/user/ -n test
+	kubectl delete -f ./tekton-microservices/queue-master/ -n test
+
 
 namespace:
 	kubectl create namespace test
