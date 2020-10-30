@@ -14,7 +14,6 @@ secret-dockerhub:
 	kubectl create secret generic nbaghanim-docker-hub \
 	 --from-file=.dockerconfigjson=/home/ubuntu/.docker/config.json \
  	--type=kubernetes.io/dockerconfigjson -n test	
-<<<<<<< HEAD
 
 
 create-deploy-images:
