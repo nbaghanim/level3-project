@@ -10,6 +10,11 @@ secret-dockerhub:
 	 --from-file=.dockerconfigjson=/home/ubuntu/.docker/config.json \
  	--type=kubernetes.io/dockerconfigjson -n test	
 
+logging: 
+	./elf/elf.sh
+
+monitoring:
+	./grafana/pro.graf.sh
 
 pipeline:
 	kubectl create -f ./pipelines/
