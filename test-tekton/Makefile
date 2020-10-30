@@ -16,10 +16,10 @@ pipelineRun:
 resource:
 	kubectl create -f ./PipelineResource/ -n test
 
-role:
+apply-roles:
 	kubectl apply -f ./role/
 	
-tasks:
+apply-tasks:
 	kubectl apply -f ./tekton-microservices/carts/ -n test
 	kubectl apply -f ./tekton-microservices/catalogue/ -n test
 	kubectl apply -f ./tekton-microservices/e2e-js-test/ -n test
