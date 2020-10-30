@@ -49,7 +49,7 @@ down:
 	docker rm -f payment
 	docker rm -f user-db
 	docker rm -f user
-	docker network rm project
+
 	
 	
 deploy-images:
