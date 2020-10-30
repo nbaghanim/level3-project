@@ -10,74 +10,7 @@ logging:
 monitoring:
 	cd k8s-sandbox && make install-monitoring && cd ..
 
-<<<<<<< HEAD
 
-secret-dockerhub:
-	docker login
-	kubectl create secret generic nbaghanim-docker-hub \
-	 --from-file=.dockerconfigjson=/home/ubuntu/.docker/config.json \
- 	--type=kubernetes.io/dockerconfigjson -n test	
-
-
-create-deploy-images:
-	kubectl create -f ./front-end/front-end-dep.yaml -n test
-	kubectl create -f ./front-end/front-end-ingress.yaml -n test
-	kubectl create -f ./front-end/front-end-svc.yaml -n test
-	kubectl create -f ./carts/carts-db-dep.yaml 	
-	kubectl create -f ./catalogue/catalogue-db-dep.yaml -n test
-	kubectl create -f ./catalogue/catalogue-db-svc.yaml -n test
-	kubectl create -f ./catalogue/catalogue-dep.yaml -n test
-	kubectl create -f ./catalogue/catalogue-svc.yaml -n test
-	kubectl create -f ./orders/orders-db-dep.yaml -n test
-	kubectl create -f ./orders/orders-db-svc.yaml -n test
-	kubectl create -f ./orders/orders-dep.yaml -n test
-	kubectl create -f ./orders/orders-svc.yaml -n test
-	kubectl create -f ./payment/payment-dep.yaml -n test
-	kubectl create -f ./payment/payment-svc.yaml -n test
-	kubectl create -f ./rabbitmq/rabbitmq-dep.yaml -n test
-	kubectl create -f ./rabbitmq/rabbitmq-svc.yaml -n test
-	kubectl create -f ./shipping/shipping-dep.yaml -n test
-	kubectl create -f ./shipping/shipping-svc.yaml -n test
-	kubectl create -f ./user/user-db-dep.yaml -n test
-	kubectl create -f ./user/user-db-svc.yaml -n test
-	kubectl create -f ./user/user-dep.yaml -n test
-	kubectl create -f ./user/user-svc.yaml -n test
-
-deploy-images:
-	kubectl apply -f ./front-end/front-end-dep.yaml -n test
-	kubectl apply -f ./front-end/front-end-ingress.yaml -n test
-	kubectl apply -f ./front-end/front-end-svc.yaml -n test
-	kubectl apply -f ./carts/carts-db-dep.yaml -n test
-	kubectl apply -f ./carts/carts-db-svc.yaml -n test
-	kubectl apply -f ./carts/carts-dep.yaml -n test
-	kubectl apply -f ./carts/carts-svc.yaml -n test
-	kubectl apply -f ./catalogue/catalogue-db-dep.yaml -n test
-	kubectl apply -f ./catalogue/catalogue-db-svc.yaml -n test
-	kubectl apply -f ./catalogue/catalogue-dep.yaml -n test
-	kubectl apply -f ./catalogue/catalogue-svc.yaml -n test
-	kubectl apply -f ./orders/orders-db-dep.yaml -n test
-	kubectl apply -f ./orders/orders-db-svc.yaml -n test
-	kubectl apply -f ./orders/orders-dep.yaml -n test
-	kubectl apply -f ./orders/orders-svc.yaml -n test
-	kubectl apply -f ./payment/payment-dep.yaml -n test
-	kubectl apply -f ./payment/payment-svc.yaml -n test
-	kubectl apply -f ./rabbitmq/rabbitmq-dep.yaml -n test
-	kubectl apply -f ./rabbitmq/rabbitmq-svc.yaml -n test
-	kubectl apply -f ./shipping/shipping-dep.yaml -n test
-	kubectl apply -f ./shipping/shipping-svc.yaml -n test
-	kubectl apply -f ./user/user-db-dep.yaml -n test
-	kubectl apply -f ./user/user-db-svc.yaml -n test
-	kubectl apply -f ./user/user-dep.yaml -n test
-	kubectl apply -f ./user/user-svc.yaml -n test
-
-=======
->>>>>>> 8968adf69bfcabd8eb207dc7cbbb48eff07b7461
-build_deploy:
-	kubectl create -f ./test-tekton/tasks/build-push-task.yaml -n test
-	kubectl create -f ./test-tekton/tasks/deploy-task.yaml -n test
-	kubectl create -f ./test-tekton/tasks/deploy-task-prod.yaml -n test
-	kubectl create -f ./test-tekton/tasks/run-e2e.yaml -n test
-	kubectl create -f ./test-tekton/tasks/wait-prods.yaml -n test
 
 build:
 	docker build -t front-end ./front-end/
@@ -91,6 +24,14 @@ build:
 	docker build -t payment ./payment/
 	docker build -t user ./user/
 	docker build -t user-db ./user/docker/user-db/
+
+
+build_deploy:
+	kubectl create -f ./test-tekton/tasks/build-push-task.yaml -n test
+	kubectl create -f ./test-tekton/tasks/deploy-task.yaml -n test
+	kubectl create -f ./test-tekton/tasks/deploy-task-prod.yaml -n test
+	kubectl create -f ./test-tekton/tasks/run-e2e.yaml -n test
+	kubectl create -f ./test-tekton/tasks/wait-prods.yaml -n test
 
 
 down:
