@@ -3,11 +3,13 @@ up: testEnv secret-dockerhub install-ingress pipeline pipelineRun apply-roles ap
 
 testEnv:
 	kubectl config set-context --current --namespace=tekton-pipelines
-	
+
 secret-dockerhub:
+	docker login
 	kubectl create secret generic nbaghanim-docker-hub \
- 	--from-file=.dockerconfigjson=/home/ubuntu/.docker/config.json \
- 	--type=kubernetes.io/dockerconfigjson
+	 --from-file=.dockerconfigjson=/home/ubuntu/.docker/config.json \
+ 	--type=kubernetes.io/dockerconfigjson -n test	
+
 
 pipeline:
 	kubectl create -f ./pipelines/
