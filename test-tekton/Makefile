@@ -55,13 +55,9 @@ delete-tasks:
 	kubectl delete -f ./tekton-microservices/payment/ -n test
 	kubectl delete -f ./tekton-microservices/shipping/ -n test
 	kubectl delete -f ./tekton-microservices/user/ -n test
-<<<<<<< HEAD
 	kubectl delete -f ./tekton-microservices/queue-master/ -n test
-
-=======
 	kubectl delete -f ./tekton-microservices/queue-master/ -n tes
 	
->>>>>>> 8968adf69bfcabd8eb207dc7cbbb48eff07b7461
 
 namespace:
 	kubectl create namespace test
