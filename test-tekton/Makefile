@@ -30,6 +30,8 @@ apply-tasks:
 	kubectl apply -f ./tekton-microservices/orders/ -n test
 	kubectl apply -f ./tekton-microservices/payment/ -n test
 	kubectl apply -f ./tekton-microservices/shipping/ -n test
+	kubectl apply -f ./tekton-microservices/user/ -n test
+	kubectl apply -f ./tekton-microservices/queue-master/ -n test
 
 delete-tasks:
 	
