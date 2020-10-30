@@ -1,11 +1,15 @@
 
+up: testEnv secret-dockerhub install-ingress pipeline pipelineRun apply-roles apply-tasks namespace
+
 testEnv:
 	kubectl config set-context --current --namespace=tekton-pipelines
-	
-secret-docker-hub:
+
+secret-dockerhub:
+	docker login
 	kubectl create secret generic nbaghanim-docker-hub \
- 	--from-file=.dockerconfigjson=/home/ubuntu/.docker/config.json \
- 	--type=kubernetes.io/dockerconfigjson
+	 --from-file=.dockerconfigjson=/home/ubuntu/.docker/config.json \
+ 	--type=kubernetes.io/dockerconfigjson -n test	
+
 
 pipeline:
 	kubectl create -f ./pipelines/
@@ -46,8 +50,13 @@ delete-tasks:
 	kubectl delete -f ./tekton-microservices/payment/ -n test
 	kubectl delete -f ./tekton-microservices/shipping/ -n test
 	kubectl delete -f ./tekton-microservices/user/ -n test
+<<<<<<< HEAD
 	kubectl delete -f ./tekton-microservices/queue-master/ -n test
 
+=======
+	kubectl delete -f ./tekton-microservices/queue-master/ -n tes
+	
+>>>>>>> 8968adf69bfcabd8eb207dc7cbbb48eff07b7461
 
 namespace:
 	kubectl create namespace test
